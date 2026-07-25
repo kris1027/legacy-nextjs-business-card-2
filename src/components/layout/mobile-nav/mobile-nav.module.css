@@ -1,0 +1,216 @@
+.root {
+  display: contents;
+}
+
+/* ───── Hamburger / X toggle ───── */
+
+.toggle {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    border-color 200ms ease-out,
+    box-shadow 200ms ease-out;
+}
+
+.toggle:focus-visible {
+  outline: none;
+  border-color: var(--acc);
+  box-shadow: 0 0 0 4px oklch(0.7 0.24 var(--theme-acc-hue, 165) / 0.18);
+}
+
+.toggle[data-open='true'] {
+  border-color: var(--acc);
+  box-shadow: 0 0 0 4px oklch(0.7 0.24 var(--theme-acc-hue, 165) / 0.12);
+}
+
+.bar {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  height: 1.5px;
+  background: var(--ink-1);
+  border-radius: 2px;
+  transition:
+    transform 280ms cubic-bezier(0.6, 0.2, 0.2, 1),
+    opacity 150ms ease-out,
+    background 200ms ease-out;
+}
+
+.toggle[data-open='true'] .bar {
+  background: var(--acc);
+}
+
+.bar:nth-child(1) {
+  top: 14px;
+}
+
+.bar:nth-child(2) {
+  top: 21px;
+}
+
+.bar:nth-child(3) {
+  top: 28px;
+}
+
+.toggle[data-open='true'] .bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.toggle[data-open='true'] .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.toggle[data-open='true'] .bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ───── Fullscreen overlay ───── */
+
+.overlay {
+  /* Sits below the sticky app header - height defined as --header-height in globals.css. */
+  position: fixed;
+  top: var(--header-height);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* Opaque dark base - the inner CosmosBackground canvas paints stars on top of this,
+     and page content behind the overlay is fully hidden. */
+  background: var(--void);
+  /* transform creates a containing block so the inner CosmosBackground's
+     position: fixed canvas anchors to this overlay, not the viewport. */
+  transform: translateZ(0);
+  font-family: inherit;
+  pointer-events: none;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 220ms cubic-bezier(0.5, 0, 0.75, 0);
+  /* Wait for inner items to reverse-stagger out before collapsing */
+  transition-delay: 360ms;
+}
+
+/* Wrapper for the inner CosmosBackground - ensures it sits behind all
+   overlay content (z: -1 puts it under non-positioned siblings) and is
+   clipped to the overlay's bounds. */
+.cosmos {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.overlay:global(.is-open) {
+  pointer-events: auto;
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 600ms cubic-bezier(0.7, 0.05, 0.2, 1);
+  transition-delay: 0ms;
+}
+
+/* CRT scanlines */
+.overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    oklch(0.7 0.24 var(--theme-acc-hue, 165) / 0.06) 0,
+    oklch(0.7 0.24 var(--theme-acc-hue, 165) / 0.06) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  mix-blend-mode: screen;
+}
+
+/* CRT vignette */
+.overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  box-shadow: inset 0 0 80px 20px oklch(0 0 0 / 0.6);
+}
+
+/* ───── Command line title ───── */
+
+.commandLine {
+  position: relative;
+  z-index: 2;
+  padding: 14px 18px 8px;
+  font-size: 11px;
+  color: var(--ink-2);
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+  transition-delay: 0ms;
+}
+
+:global(.is-open) .commandLine {
+  opacity: 1;
+  /* After boot log finishes (~5 lines × 75ms = 375ms) */
+  transition-delay: 380ms;
+}
+
+.dollar {
+  color: var(--acc);
+}
+
+.flag {
+  color: var(--acc);
+}
+
+.flagDim {
+  color: var(--ink-3);
+}
+
+/* ───── Tail typing prompt container ───── */
+
+.tail {
+  position: relative;
+  z-index: 2;
+  padding: 14px 18px 6px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 300ms ease-out,
+    transform 300ms ease-out;
+  transition-delay: 0ms;
+}
+
+:global(.is-open) .tail {
+  opacity: 1;
+  transform: translateY(0);
+  /* After menu items have settled (~960ms) */
+  transition-delay: 980ms;
+}
+
+/* ───── Hide on desktop ───── */
+
+@media (min-width: 800px) {
+  .root {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .commandLine,
+  .tail {
+    transition-duration: 0.01ms;
+    transition-delay: 0ms;
+  }
+  .bar {
+    transition-duration: 0.01ms;
+  }
+}

@@ -1,0 +1,29 @@
+.cursor {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: var(--ink-0);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1000;
+  box-shadow:
+    0 0 14px var(--acc),
+    0 0 24px oklch(0.6 0.26 var(--theme-hue) / 0.5);
+  mix-blend-mode: screen;
+  transition:
+    width 200ms,
+    height 200ms;
+  will-change: transform;
+}
+
+.cursorHover {
+  width: 14px;
+  height: 14px;
+  background: oklch(0.95 0.1 var(--theme-hue));
+}
+
+@media (hover: none) {
+  .cursor {
+    display: none;
+  }
+}

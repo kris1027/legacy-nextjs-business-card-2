@@ -1,0 +1,44 @@
+.prompt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--ink-1);
+}
+
+.dollar {
+  color: var(--acc);
+}
+
+.text {
+  color: var(--ink-1);
+  white-space: pre;
+}
+
+.cursor {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  margin-left: 2px;
+  background: var(--acc);
+  box-shadow: 0 0 8px oklch(0.7 0.24 var(--theme-acc-hue, 165) / 0.5);
+  animation: blink 1s steps(2) infinite;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    animation: none;
+  }
+}

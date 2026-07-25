@@ -1,0 +1,46 @@
+.callout {
+  --frame-ratio: 4/3;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (min-width: 800px) {
+  .callout {
+    --frame-ratio: 16/9;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.calloutBody h3 {
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 500;
+  color: var(--ink-0);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 22px;
+}
+
+.calloutBody h3 em {
+  font-style: normal;
+  background: linear-gradient(
+    135deg,
+    oklch(0.85 0.2 var(--theme-hue)),
+    oklch(0.65 0.26 var(--theme-hue))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.calloutBody p {
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+
+.calloutCta {
+  margin-top: 22px;
+}

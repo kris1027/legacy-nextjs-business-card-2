@@ -1,0 +1,35 @@
+.bracketTl {
+  top: 14px;
+  left: 14px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.bracketTr {
+  top: 14px;
+  right: 14px;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.bracketBl {
+  bottom: 14px;
+  left: 14px;
+  border-right: 0;
+  border-top: 0;
+}
+
+.bracketBr {
+  bottom: 14px;
+  right: 14px;
+  border-left: 0;
+  border-top: 0;
+}
+
+.sep {
+  color: oklch(0.2 0.04 160);
+}
+
+.pink {
+  color: var(--acc-pink);
+}

@@ -1,0 +1,40 @@
+.brandmark {
+  display: block;
+  filter: drop-shadow(0 0 12px oklch(0.6 0.28 var(--theme-hue) / 0.45));
+  flex-shrink: 0;
+}
+
+.brandmarkAnimated :global(.bm-orbit) {
+  transform-origin: 32px 32px;
+  animation: bm-orbit-spin 18s linear infinite;
+}
+
+.brandmarkAnimated :global(.bm-sat) {
+  filter: drop-shadow(0 0 4px oklch(0.85 0.22 var(--theme-acc-hue, 165)));
+}
+
+.brandmarkAnimated :global(.bm-monitor) {
+  animation: bm-pulse 3.6s ease-in-out infinite;
+  transform-origin: 32px 32px;
+}
+
+@keyframes bm-orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bm-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 6px oklch(0.6 0.28 var(--theme-hue) / 0.4));
+  }
+  50% {
+    filter: drop-shadow(
+      0 0 14px oklch(0.65 0.3 var(--theme-acc-hue, 165) / 0.7)
+    );
+  }
+}

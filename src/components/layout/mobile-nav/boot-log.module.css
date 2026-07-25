@@ -1,0 +1,67 @@
+.log {
+  padding: 14px 18px 10px;
+  font-size: 10.5px;
+  line-height: 1.6;
+  border-bottom: 1px dashed var(--line);
+}
+
+.line {
+  display: flex;
+  gap: 10px;
+}
+
+.pending {
+  visibility: hidden;
+}
+
+.timestamp {
+  color: var(--ink-4);
+  width: 38px;
+  flex-shrink: 0;
+}
+
+.message {
+  color: var(--ink-3);
+  display: inline-flex;
+  align-items: center;
+  min-height: 1em;
+}
+
+.accent .message {
+  color: var(--acc);
+}
+
+.highlight .message {
+  color: var(--ink-0);
+}
+
+.dim .message {
+  color: var(--ink-3);
+}
+
+.caret {
+  display: inline-block;
+  width: 7px;
+  height: 11px;
+  margin-left: 2px;
+  background: var(--acc);
+  box-shadow: 0 0 6px oklch(0.7 0.24 var(--theme-acc-hue, 165) / 0.5);
+  animation: bootCaret 1s steps(2) infinite;
+}
+
+@keyframes bootCaret {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret {
+    animation: none;
+  }
+}

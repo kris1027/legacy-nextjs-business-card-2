@@ -1,0 +1,255 @@
+.breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  transition:
+    color 200ms,
+    border-color 200ms;
+  text-decoration: none;
+  background: none;
+  font-family: inherit;
+}
+
+.breadcrumb:hover {
+  color: var(--ink-0);
+  border-color: var(--acc);
+}
+
+.hero {
+  --frame-ratio: 4/3;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  align-items: center;
+}
+
+.heroImg {
+  order: -1;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+@media (min-width: 800px) {
+  .hero {
+    --frame-ratio: 16/9;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 56px;
+  }
+
+  .heroImg {
+    order: 0;
+    max-width: none;
+    margin: 0;
+  }
+}
+
+.glyphRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.title {
+  font-size: clamp(34px, 5vw, 56px);
+  line-height: 1.05;
+  font-weight: 500;
+  color: var(--ink-0);
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.lead {
+  font-size: 17px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  max-width: 520px;
+}
+
+.meta {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.metaKey {
+  font-size: 10px;
+  color: var(--ink-3);
+  letter-spacing: 0.16em;
+  margin-bottom: 6px;
+}
+
+.metaVal {
+  font-size: 13px;
+  color: var(--ink-1);
+  line-height: 1.5;
+}
+
+.heroImg {
+  width: 100%;
+}
+
+.longDescription {
+  font-size: 15px;
+  color: var(--ink-1);
+  line-height: 1.75;
+  max-width: 720px;
+  margin-bottom: 28px;
+}
+
+.features {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px 24px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+
+.features li {
+  font-size: 13px;
+  color: var(--ink-2);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.features li::before {
+  content: '◇';
+  color: var(--acc);
+  font-size: 9px;
+  flex-shrink: 0;
+}
+
+.process {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-left: 1px solid var(--line);
+  padding-left: 0;
+  position: relative;
+}
+
+.processStep {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 24px;
+  padding: 22px 0 22px 24px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+
+.processStep:last-child {
+  border-bottom: none;
+}
+
+.processStep::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 32px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--acc);
+  box-shadow: 0 0 12px var(--acc);
+}
+
+.processNum {
+  font-size: 32px;
+  color: var(--acc);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.processTitle {
+  font-size: 17px;
+  color: var(--ink-0);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.processDesc {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+.breadcrumbCurrent {
+  color: var(--ink-1);
+}
+
+.glyphIcon {
+  font-size: 44px;
+  color: var(--acc);
+}
+
+.glyphLabel {
+  font-size: 10px;
+  color: var(--ink-4);
+  letter-spacing: 0.16em;
+}
+
+.heroBtns {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ctaKicker {
+  font-size: 11px;
+  color: var(--acc);
+  letter-spacing: 0.16em;
+  margin-bottom: 10px;
+}
+
+.cta h3 {
+  font-size: clamp(22px, 3vw, 32px);
+  color: var(--ink-0);
+  margin-bottom: 12px;
+}
+
+.cta p {
+  color: var(--ink-2);
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+.ctaBtns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding: 40px;
+  border: 1px solid var(--line-2);
+  border-radius: 6px;
+  background:
+    linear-gradient(
+      135deg,
+      oklch(0.5 0.28 var(--theme-hue) / 0.18),
+      oklch(0.4 0.22 var(--theme-hue) / 0.08)
+    ),
+    oklch(0.06 0.04 var(--theme-hue) / 0.6);
+}

@@ -1,0 +1,479 @@
+/* ──────────────────────────────────────────────────────────────────
+   COSMOS - Design tokens, resets, and shared utilities
+   ────────────────────────────────────────────────────────────── */
+
+:root {
+  --void: #04020a;
+  --void-2: #0a0612;
+  /* Foreground tokens vs --void background.
+     Targets: WCAG AA 4.5:1 for body text, 3:1 for large text / non-text UI.
+     Verify after any L change with the WebAIM contrast checker. */
+  --ink-0: oklch(0.98 0.02 var(--theme-hue, 160)); /* near-white, AAA */
+  --ink-1: oklch(0.86 0.04 var(--theme-hue, 160)); /* body, AA+ */
+  --ink-2: oklch(0.68 0.06 var(--theme-hue, 160)); /* secondary body, AA */
+  --ink-3: oklch(0.65 0.06 var(--theme-hue, 160)); /* meta/labels, AA */
+  --ink-4: oklch(0.55 0.05 var(--theme-hue, 160)); /* muted text, AA */
+  --ink-5: oklch(0.2 0.04 var(--theme-hue, 160)); /* decorative only */
+  --acc: oklch(0.7 0.24 var(--theme-acc-hue, 165));
+  --acc-2: oklch(0.62 0.26 var(--theme-hue, 160));
+  --acc-3: oklch(0.58 0.22 var(--theme-hue-2, 140));
+  --acc-pink: oklch(0.68 0.24 350);
+  /* UI borders need 3:1 against --void; raised alpha to clear that bar. */
+  --line: oklch(1 0.04 var(--theme-hue, 160) / 0.2);
+  --line-2: oklch(1 0.04 var(--theme-hue, 160) / 0.36);
+  --glow: 0 0 40px oklch(0.6 0.28 var(--theme-hue, 160) / 0.4);
+  --theme-hue: 160;
+  --theme-hue-2: 140;
+  --theme-acc-hue: 165;
+  /* 14px pad + 52px BrandMark + 14px pad + 1px border. The mobile-nav overlay
+     anchors below this so the sticky header stays visible above it. */
+  --header-height: 81px;
+  --focus-ring-color: oklch(0.92 0.16 var(--theme-hue, 160));
+  --focus-ring-width: 2px;
+}
+
+[data-theme='emerald'] {
+  --theme-hue: 160;
+  --theme-hue-2: 140;
+  --theme-acc-hue: 165;
+}
+[data-theme='lime'] {
+  --theme-hue: 130;
+  --theme-hue-2: 100;
+  --theme-acc-hue: 120;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--void);
+  color: var(--ink-1);
+  font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  font-feature-settings: 'ss01', 'ss02';
+  -webkit-font-smoothing: antialiased;
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Cosmic cursor only replaces the native cursor on fine-pointer devices
+   when the user has not requested reduced motion. Touch, coarse-pointer,
+   and reduced-motion users keep the system cursor. */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body {
+    cursor: none;
+  }
+  body,
+  body * {
+    cursor: none !important;
+  }
+}
+
+/* ───────────  Focus ring  ─────────── */
+
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+a:focus-visible,
+button:focus-visible {
+  outline-offset: 3px;
+}
+
+a,
+button {
+  font-family: inherit;
+  color: inherit;
+}
+button {
+  background: none;
+  border: none;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ───────────  App shell  ─────────── */
+
+.cs-app {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.cs-main {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* ───────────  Page wrapper  ─────────── */
+
+.cs-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 20px 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+@media (min-width: 700px) {
+  .cs-page {
+    gap: 96px;
+    padding: 64px 28px 96px;
+  }
+}
+
+/* ───────────  Shared button  ─────────── */
+
+.btn {
+  position: relative;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  user-select: none;
+  transition:
+    transform 150ms,
+    box-shadow 250ms,
+    border-color 250ms;
+}
+.btn:hover:active {
+  transform: translateY(0);
+}
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: linear-gradient(
+    180deg,
+    oklch(0.78 0.22 var(--theme-acc-hue)),
+    oklch(0.62 0.26 var(--theme-acc-hue))
+  );
+  color: oklch(0.08 0.06 var(--theme-hue));
+  border: 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 0 20px oklch(0.7 0.24 var(--theme-acc-hue) / 0.5),
+    0 0 50px oklch(0.7 0.24 var(--theme-acc-hue) / 0.22);
+}
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 6px 28px oklch(0.7 0.24 var(--theme-acc-hue) / 0.5),
+    0 0 70px oklch(0.7 0.24 var(--theme-acc-hue) / 0.4);
+}
+
+.btn--ghost {
+  background: oklch(0.04 0.04 var(--theme-hue) / 0.6);
+  color: var(--ink-1);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.btn--ghost:hover {
+  color: var(--ink-0);
+  transform: translateY(-2px);
+  border-color: oklch(0.7 0.24 var(--theme-acc-hue) / 0.4);
+  box-shadow:
+    0 0 24px oklch(0.7 0.24 var(--theme-acc-hue) / 0.12),
+    inset 0 0 24px oklch(0.7 0.24 var(--theme-acc-hue) / 0.06);
+}
+.btn--ghost::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 9px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    oklch(0.7 0.24 var(--theme-acc-hue) / 0.5),
+    transparent 30%,
+    transparent 70%,
+    oklch(0.68 0.24 350 / 0.4)
+  );
+  -webkit-mask:
+    linear-gradient(#000, #000) content-box,
+    linear-gradient(#000, #000);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms;
+}
+.btn--ghost:hover::before {
+  opacity: 1;
+}
+
+.btn--card {
+  background: transparent;
+  color: var(--acc);
+  border: 1px solid oklch(0.7 0.24 var(--theme-acc-hue) / 0.25);
+  padding: 0 18px 0 14px;
+  overflow: hidden;
+}
+.btn--card:hover {
+  border-color: var(--acc);
+  color: var(--ink-0);
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 18px oklch(0.7 0.24 var(--theme-acc-hue) / 0.12),
+    inset 0 0 18px oklch(0.7 0.24 var(--theme-acc-hue) / 0.12);
+}
+.btn--card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 14px;
+  background: var(--acc);
+  box-shadow: 0 0 6px oklch(0.7 0.24 var(--theme-acc-hue) / 0.5);
+  border-radius: 0 2px 2px 0;
+  transition: height 250ms cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+.btn--card:hover::before {
+  height: 100%;
+}
+.btn--card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    oklch(0.7 0.24 var(--theme-acc-hue) / 0.12),
+    transparent
+  );
+  width: 50%;
+  transform: translateX(-150%);
+  transition: transform 800ms cubic-bezier(0.3, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+.btn--card:hover::after {
+  transform: translateX(300%);
+}
+.btn--card .arr-track {
+  position: relative;
+  width: 16px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+}
+.btn--card .arr-track .arr {
+  position: absolute;
+  left: 0;
+  transition:
+    transform 350ms cubic-bezier(0.3, 0.7, 0.2, 1),
+    opacity 350ms;
+}
+.btn--card .arr-track .arr.ghost {
+  opacity: 0;
+  transform: translateX(-16px);
+}
+.btn--card:hover .arr-track .arr.real {
+  transform: translateX(16px);
+  opacity: 0;
+}
+.btn--card:hover .arr-track .arr.ghost {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.btn .arr {
+  display: inline-block;
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+.btn:hover .arr--right {
+  transform: translateX(4px);
+}
+.btn:hover .arr--ne {
+  transform: translate(3px, -3px);
+}
+
+.btn--sm {
+  height: 38px;
+  padding: 0 16px;
+  font-size: 12px;
+  gap: 8px;
+}
+.btn--lg {
+  height: 56px;
+  padding: 0 28px;
+  font-size: 14px;
+  gap: 14px;
+  border-radius: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+  .btn--primary:hover,
+  .btn--ghost:hover,
+  .btn--card:hover {
+    transform: none;
+  }
+  .btn--card::before {
+    transition: none;
+  }
+  .btn--card::after {
+    transition: none;
+  }
+  .btn--card .arr-track .arr {
+    transition: none;
+  }
+  .btn--ghost::before {
+    transition: none;
+  }
+}
+
+/* ───────────  Scroll-reveal utility  ─────────── */
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 1s cubic-bezier(0.22, 0.9, 0.3, 1) var(--reveal-delay, 0s),
+    transform 1s cubic-bezier(0.22, 0.9, 0.3, 1) var(--reveal-delay, 0s);
+}
+.scroll-reveal.in-view {
+  opacity: 1;
+  transform: none;
+}
+
+/* ───────────  Page transition  ─────────── */
+
+.cs-fade-in {
+  animation: page-fade 700ms cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+/* ───────────  Utility  ─────────── */
+
+.cs-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-2), transparent);
+}
+
+/* ───────────  Keyframes  ─────────── */
+
+@keyframes blink {
+  0%,
+  60%,
+  100% {
+    opacity: 1;
+  }
+  65%,
+  95% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rot {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes page-fade {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ───────────  Skip link  ─────────── */
+
+.cs-skip {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--ink-0);
+  color: var(--void);
+  border-radius: 4px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 200ms;
+}
+.cs-skip:focus,
+.cs-skip:focus-visible {
+  transform: translateY(0);
+}
+
+/* ───────────  Visually-hidden  ─────────── */
+
+.cs-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ───────────  Reduced motion  ─────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  html,
+  body {
+    scroll-behavior: auto !important;
+  }
+}

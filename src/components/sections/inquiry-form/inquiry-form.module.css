@@ -1,0 +1,234 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--acc);
+  text-transform: uppercase;
+}
+
+.input,
+.textarea {
+  background: oklch(0.06 0.05 var(--theme-hue) / 0.6);
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+  color: var(--ink-0);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 12px 14px;
+  transition: border-color 200ms;
+  width: 100%;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--ink-4);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.input:focus-visible,
+.textarea:focus-visible {
+  border-color: var(--acc);
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+.fieldError {
+  font-size: 11px;
+  color: oklch(0.75 0.18 25);
+  letter-spacing: 0.04em;
+}
+
+.inputError {
+  border-color: oklch(0.65 0.22 25 / 0.7) !important;
+}
+
+.error {
+  padding: 12px 16px;
+  border: 1px solid oklch(0.65 0.22 25 / 0.4);
+  border-radius: 4px;
+  background: oklch(0.65 0.22 25 / 0.08);
+  font-size: 12px;
+  color: oklch(0.75 0.18 25);
+  letter-spacing: 0.04em;
+}
+
+.errorLink {
+  color: oklch(0.75 0.18 25);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.success {
+  padding: 40px 32px;
+  border: 1px solid var(--line-2);
+  border-radius: 6px;
+  background: oklch(0.06 0.05 var(--theme-hue) / 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.successCode {
+  font-size: 11px;
+  color: var(--acc);
+  letter-spacing: 0.16em;
+}
+
+.successTitle {
+  font-size: 20px;
+  color: var(--ink-0);
+}
+
+.successBody {
+  font-size: 13px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+.selectWrapper {
+  position: relative;
+}
+
+/* Ensure the dropdown overlaps fields that follow it in the DOM.
+   Fields with opacity/transform animations form stacking contexts, and
+   later siblings paint on top by default - this z-index counteracts that. */
+.selectField {
+  z-index: 1;
+}
+
+.selectTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: oklch(0.06 0.05 var(--theme-hue) / 0.6);
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+  color: var(--ink-0);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 12px 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 200ms;
+}
+
+.selectTrigger:focus-visible {
+  border-color: var(--acc);
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+.selectTriggerOpen {
+  border-color: var(--acc);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.selectPlaceholder {
+  color: var(--ink-4);
+}
+
+.selectArrow {
+  font-size: 11px;
+  color: var(--ink-3);
+  transition: transform 200ms;
+  flex-shrink: 0;
+}
+
+.selectArrowOpen {
+  transform: rotate(180deg);
+}
+
+.selectDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: oklch(0.08 0.05 var(--theme-hue) / 1);
+  border: 1px solid var(--acc);
+  border-top: none;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  overflow: hidden;
+}
+
+.selectOption {
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--ink-0);
+  cursor: pointer;
+  transition: background 150ms;
+}
+
+.selectOption:hover,
+.selectOptionFocused {
+  background: oklch(0.2 0.06 var(--theme-hue) / 1);
+}
+
+.selectOptionSelected {
+  color: var(--acc);
+}
+
+/* ── Form reveal animation ─────────────────────────── */
+/* Selectors assume 4 fields normally, 5 when "inne" topic field is visible. */
+
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.field,
+.form > button {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.formInView .field:nth-of-type(1) {
+  animation: reveal 0.8s cubic-bezier(0.22, 0.9, 0.3, 1) 0.05s forwards;
+}
+
+.formInView .field:nth-of-type(2) {
+  animation: reveal 0.8s cubic-bezier(0.22, 0.9, 0.3, 1) 0.15s forwards;
+}
+
+.formInView .field:nth-of-type(3) {
+  animation: reveal 0.8s cubic-bezier(0.22, 0.9, 0.3, 1) 0.25s forwards;
+}
+
+.formInView .field:nth-of-type(4) {
+  animation: reveal 0.8s cubic-bezier(0.22, 0.9, 0.3, 1) 0.35s forwards;
+}
+
+.formInView .field:nth-of-type(5) {
+  animation: reveal 0.8s cubic-bezier(0.22, 0.9, 0.3, 1) 0.45s forwards;
+}
+
+.formInView > button {
+  animation: reveal 0.8s cubic-bezier(0.22, 0.9, 0.3, 1) 0.55s forwards;
+}
