@@ -1,5 +1,12 @@
 # Business Card Website
 
+<img width="1256" height="1168" alt="SCR-20260725-oxgb" src="https://github.com/user-attachments/assets/2efe4b1f-3958-47fe-befc-36eb2a7b2fc0" />
+<img width="1309" height="928" alt="SCR-20260725-oxed" src="https://github.com/user-attachments/assets/a46563f4-402d-4366-91c4-37db9f00170d" />
+<img width="1285" height="951" alt="SCR-20260725-owyt" src="https://github.com/user-attachments/assets/5dde2d55-d8d1-455d-aa48-ff980ca8a742" />
+
+
+
+
 Personal business card website. Built with Next.js 16 and deployed on Vercel.
 
 ## Tech Stack
