@@ -67,3 +67,5 @@ Deployed on Vercel. Every push to `main` triggers a production deploy automatica
 <img width="400" alt="SCR-20260725-oxgb" src="https://github.com/user-attachments/assets/2efe4b1f-3958-47fe-befc-36eb2a7b2fc0" />
 <img width="400" alt="SCR-20260725-oxed" src="https://github.com/user-attachments/assets/a46563f4-402d-4366-91c4-37db9f00170d" />
 <img width="400" alt="SCR-20260725-owyt" src="https://github.com/user-attachments/assets/5dde2d55-d8d1-455d-aa48-ff980ca8a742" />
+<img width="400" alt="SCR-20260725-oytr" src="https://github.com/user-attachments/assets/0d2feacd-0807-4fb5-8392-8ae031b5d9cd" />
+
