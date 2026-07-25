@@ -1,6 +1,6 @@
 # Business Card Website
 
-Personal business card website. Built with Next.js 16 and deployed on Vercel.
+ **Legacy UI.** This is a previous, space/cosmos-themed design of [zaruszaj.pl](https://zaruszaj.pl), kept for reference. It has been superseded by a newer interface and is no longer the live version.
 
 ## Tech Stack
 
